@@ -4,7 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 const SideNavBar = ({ currentStep, setCurrentStep, steps, isOpen, setIsOpen }) => {
   const handleNavigation = (step) => {
     setCurrentStep(step);
-    setIsOpen(false); // Close sidebar on navigation click
+    setIsOpen(false);
   };
 
   return (
@@ -12,24 +12,24 @@ const SideNavBar = ({ currentStep, setCurrentStep, steps, isOpen, setIsOpen }) =
       {/* Backdrop for mobile view */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-20 bg-white/40 backdrop-blur-sm transition-opacity lg:hidden"
+          className="fixed inset-0 z-20 bg-black opacity-50 transition-opacity md:hidden"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
 
       {/* Sidebar */}
       <nav
-        className={`fixed inset-y-0 left-0 z-30 w-64 bg-white p-6 shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:inset-auto lg:shadow-none ${
+        className={`fixed inset-y-0 left-0 z-30 w-64 bg-[#111827] text-gray-300 flex flex-col shadow-xl transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:inset-auto md:shadow-none ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-bold text-gray-800">Survey Sections</h3>
-          <button onClick={() => setIsOpen(false)} className="lg:hidden text-gray-500 hover:text-gray-700">
-            <XMarkIcon className="h-6 w-6" />
+        <div className="flex items-center justify-between p-6">
+          <div className="text-2xl font-bold text-white">Survey</div>
+          <button onClick={() => setIsOpen(false)} className="md:hidden">
+            <XMarkIcon className="h-6 w-6 text-white" />
           </button>
         </div>
-        <ul className="space-y-2">
+        <ul className="mt-6 px-4 space-y-2 text-left">
           {steps.map((step, index) => {
             const stepNumber = index + 1;
             const isActive = currentStep === stepNumber;
@@ -37,13 +37,16 @@ const SideNavBar = ({ currentStep, setCurrentStep, steps, isOpen, setIsOpen }) =
               <li key={step}>
                 <button
                   onClick={() => handleNavigation(stepNumber)}
-                  className={`w-full text-left px-4 py-2 rounded-md text-sm font-medium transition ${
+                  className={`w-full text-left px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 group relative ${
                     isActive
-                      ? 'bg-blue-600 text-white shadow'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                      ? 'bg-gray-700 text-white border-l-4 border-green-500 shadow-md'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   }`}
                 >
                   {step}
+                  {isActive && (
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2 w-2 h-2 bg-green-500 rounded-full"></span>
+                  )}
                 </button>
               </li>
             );
